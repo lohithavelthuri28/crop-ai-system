@@ -1,0 +1,17 @@
+# Python
+.venv
+venv
+__pycache__/
+*.pyc
+model.pkl
+
+# Node
+node_modules
+dist
+
+# Env
+.env
+
+# OS
+.DS_Store
+Thumbs.db
