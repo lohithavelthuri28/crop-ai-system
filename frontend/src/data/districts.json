@@ -1,0 +1,200 @@
+[
+    {
+        "state": "Telangana",
+        "district": "Adilabad",
+        "soil_type": "Red",
+        "avg_rainfall": 1045
+    },
+    {
+        "state": "Telangana",
+        "district": "Bhadradri Kothagudem",
+        "soil_type": "Alluvial",
+        "avg_rainfall": 1150
+    },
+    {
+        "state": "Telangana",
+        "district": "Hanumakonda",
+        "soil_type": "Black",
+        "avg_rainfall": 990
+    },
+    {
+        "state": "Telangana",
+        "district": "Hyderabad",
+        "soil_type": "Red",
+        "avg_rainfall": 790
+    },
+    {
+        "state": "Telangana",
+        "district": "Jagtial",
+        "soil_type": "Black",
+        "avg_rainfall": 980
+    },
+    {
+        "state": "Telangana",
+        "district": "Jangaon",
+        "soil_type": "Red",
+        "avg_rainfall": 870
+    },
+    {
+        "state": "Telangana",
+        "district": "Jayashankar Bhupalpally",
+        "soil_type": "Laterite",
+        "avg_rainfall": 1020
+    },
+    {
+        "state": "Telangana",
+        "district": "Jogulamba Gadwal",
+        "soil_type": "Red",
+        "avg_rainfall": 650
+    },
+    {
+        "state": "Telangana",
+        "district": "Kamareddy",
+        "soil_type": "Black",
+        "avg_rainfall": 920
+    },
+    {
+        "state": "Telangana",
+        "district": "Karimnagar",
+        "soil_type": "Black",
+        "avg_rainfall": 950
+    },
+    {
+        "state": "Telangana",
+        "district": "Khammam",
+        "soil_type": "Alluvial",
+        "avg_rainfall": 1030
+    },
+    {
+        "state": "Telangana",
+        "district": "Komaram Bheem",
+        "soil_type": "Red",
+        "avg_rainfall": 1100
+    },
+    {
+        "state": "Telangana",
+        "district": "Mahabubabad",
+        "soil_type": "Red",
+        "avg_rainfall": 970
+    },
+    {
+        "state": "Telangana",
+        "district": "Mahabubnagar",
+        "soil_type": "Red",
+        "avg_rainfall": 680
+    },
+    {
+        "state": "Telangana",
+        "district": "Mancherial",
+        "soil_type": "Black",
+        "avg_rainfall": 1020
+    },
+    {
+        "state": "Telangana",
+        "district": "Medak",
+        "soil_type": "Black",
+        "avg_rainfall": 890
+    },
+    {
+        "state": "Telangana",
+        "district": "Medchal",
+        "soil_type": "Red",
+        "avg_rainfall": 800
+    },
+    {
+        "state": "Telangana",
+        "district": "Mulugu",
+        "soil_type": "Laterite",
+        "avg_rainfall": 1150
+    },
+    {
+        "state": "Telangana",
+        "district": "Nagarkurnool",
+        "soil_type": "Red",
+        "avg_rainfall": 720
+    },
+    {
+        "state": "Telangana",
+        "district": "Nalgonda",
+        "soil_type": "Black",
+        "avg_rainfall": 780
+    },
+    {
+        "state": "Telangana",
+        "district": "Narayanpet",
+        "soil_type": "Red",
+        "avg_rainfall": 640
+    },
+    {
+        "state": "Telangana",
+        "district": "Nirmal",
+        "soil_type": "Red",
+        "avg_rainfall": 1040
+    },
+    {
+        "state": "Telangana",
+        "district": "Nizamabad",
+        "soil_type": "Black",
+        "avg_rainfall": 980
+    },
+    {
+        "state": "Telangana",
+        "district": "Peddapalli",
+        "soil_type": "Black",
+        "avg_rainfall": 950
+    },
+    {
+        "state": "Telangana",
+        "district": "Rajanna Sircilla",
+        "soil_type": "Black",
+        "avg_rainfall": 940
+    },
+    {
+        "state": "Telangana",
+        "district": "Ranga Reddy",
+        "soil_type": "Red",
+        "avg_rainfall": 780
+    },
+    {
+        "state": "Telangana",
+        "district": "Sangareddy",
+        "soil_type": "Black",
+        "avg_rainfall": 860
+    },
+    {
+        "state": "Telangana",
+        "district": "Siddipet",
+        "soil_type": "Black",
+        "avg_rainfall": 900
+    },
+    {
+        "state": "Telangana",
+        "district": "Suryapet",
+        "soil_type": "Black",
+        "avg_rainfall": 820
+    },
+    {
+        "state": "Telangana",
+        "district": "Vikarabad",
+        "soil_type": "Laterite",
+        "avg_rainfall": 910
+    },
+    {
+        "state": "Telangana",
+        "district": "Wanaparthy",
+        "soil_type": "Red",
+        "avg_rainfall": 700
+    },
+    {
+        "state": "Telangana",
+        "district": "Warangal",
+        "soil_type": "Black",
+        "avg_rainfall": 1000
+    },
+    {
+        "state": "Telangana",
+        "district": "Yadadri Bhuvanagiri",
+        "soil_type": "Red",
+        "avg_rainfall": 850
+    }
+]

@@ -41,9 +41,14 @@ export function InputForm({ onPredict, isLoading }: InputFormProps) {
   return (
     <Card className="shadow-lg hover:shadow-xl transition-shadow">
       <CardHeader className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/30 dark:to-blue-950/30 border-b dark:border-zinc-800">
-        <div className="flex items-center gap-2 mb-2">
-          <FlaskConical className="h-5 w-5 text-green-600" />
-          <CardTitle>Input Parameters</CardTitle>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <FlaskConical className="h-5 w-5 text-green-600" />
+            <CardTitle>Soil Test Estimate</CardTitle>
+          </div>
+          <Button variant="outline" size="sm" asChild className="w-full sm:w-auto">
+            <a href="/standard-estimate">Standard Estimate</a>
+          </Button>
         </div>
         <CardDescription>
           Enter soil nutrients, pH level, and location details for accurate crop prediction

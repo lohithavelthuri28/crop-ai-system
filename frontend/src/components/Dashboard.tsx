@@ -52,6 +52,11 @@ export function Dashboard() {
       temperature: Math.round(20 + Math.random() * 15),
       humidity: Math.round(60 + Math.random() * 30),
       rainfall: Math.round(100 + Math.random() * 150),
+      topCrops: [
+        { crop, confidence },
+        { crop: 'Maize', confidence: 75 },
+        { crop: 'Wheat', confidence: 60 }
+      ]
     };
   };
 

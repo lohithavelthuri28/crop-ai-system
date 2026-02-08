@@ -1,7 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Progress } from './ui/progress';
 import { PredictionResult } from '../types/crop';
-import { Wheat, TrendingUp, Thermometer, Droplets, CloudRain, Sparkles, Loader2 } from 'lucide-react';
+import { Wheat, TrendingUp, Thermometer, Droplets, CloudRain, Sparkles, Loader2, ShoppingBag, ExternalLink } from 'lucide-react';
+import { cropFertilizers } from '../data/fertilizers';
 
 interface ResultsCardProps {
   prediction: PredictionResult | null;
@@ -86,57 +87,65 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
         <CardDescription>AI-powered crop recommendation based on your inputs</CardDescription>
       </CardHeader>
       <CardContent className="pt-6 space-y-6">
-        {/* Recommended Crop */}
+        {/* Top 3 Crops Podium (Themed) */}
         <div className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20 rounded-lg p-6 border-2 border-green-200 dark:border-green-900/50">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="rounded-full bg-green-600 p-3 text-white">
-                {getCropIcon()}
-              </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Recommended Crop</p>
-                <h2 className="text-3xl font-bold text-green-700">{prediction.crop}</h2>
-              </div>
-            </div>
+          <div className="flex flex-col items-center mb-6">
+            <h2 className="text-xl font-bold text-center mb-2">Top Recommendations</h2>
+            <p className="text-sm text-muted-foreground">Based on your soil and climate data</p>
           </div>
 
-          {/* All Crop Probabilities */}
-          {prediction?.probabilities && (
-            <div className="mt-6 space-y-2">
-              <h3 className="font-semibold text-sm">All Crop Probabilities</h3>
-
-              {Object.entries(prediction.probabilities).map(([crop, prob]) => (
-                <div key={crop} className="flex justify-between text-sm">
-                  <span>{crop}</span>
-                  <span>{(Number(prob) * 100).toFixed(1)}%</span>
+          {prediction.topCrops && prediction.topCrops.length >= 3 ? (
+            <div className="flex items-end justify-center gap-4 min-h-[200px]">
+              {/* 2nd Place */}
+              <div className="flex flex-col items-center w-1/3">
+                <div className="mb-2 text-center">
+                  <p className="font-bold text-lg text-green-700 dark:text-green-300">{prediction.topCrops[1].crop}</p>
+                  <p className="text-sm font-medium text-muted-foreground">{prediction.topCrops[1].confidence}%</p>
                 </div>
-              ))}
+                <div className="w-full bg-green-100 dark:bg-green-900/40 rounded-t-lg flex flex-col items-center justify-start py-4 h-24 border-t-4 border-green-400/50">
+                  <span className="font-bold text-green-600 dark:text-green-400 mt-1">2nd</span>
+                </div>
+              </div>
+
+              {/* 1st Place */}
+              <div className="flex flex-col items-center w-1/3">
+                <div className="mb-2 text-center">
+                  <p className="font-bold text-xl text-green-800 dark:text-green-100">{prediction.topCrops[0].crop}</p>
+                  <p className="text-sm font-medium text-muted-foreground">{prediction.topCrops[0].confidence}%</p>
+                </div>
+                <div className="w-full bg-green-200 dark:bg-green-800/40 rounded-t-lg flex flex-col items-center justify-start py-4 h-32 border-t-4 border-green-600 shadow-md">
+                  <span className="font-bold text-green-800 dark:text-green-200 mt-1 text-lg">1st</span>
+                </div>
+              </div>
+
+              {/* 3rd Place */}
+              <div className="flex flex-col items-center w-1/3">
+                <div className="mb-2 text-center">
+                  <p className="font-bold text-lg text-green-700 dark:text-green-300">{prediction.topCrops[2].crop}</p>
+                  <p className="text-sm font-medium text-muted-foreground">{prediction.topCrops[2].confidence}%</p>
+                </div>
+                <div className="w-full bg-green-50 dark:bg-green-900/20 rounded-t-lg flex flex-col items-center justify-start py-4 h-16 border-t-4 border-green-300/50">
+                  <span className="font-bold text-green-500 dark:text-green-500 mt-1">3rd</span>
+                </div>
+              </div>
             </div>
-          )}
-
-
-          {/* Confidence */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-green-600" />
-                <span className="text-sm font-medium">Confidence Level</span>
+          ) : (
+            // Fallback if no topCrops data (legacy or error)
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="rounded-full bg-green-600 p-3 text-white">
+                  {getCropIcon()}
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Recommended Crop</p>
+                  <h2 className="text-3xl font-bold text-green-700">{prediction.crop}</h2>
+                </div>
               </div>
               <span className={`text-2xl font-bold ${getConfidenceColor()}`}>
                 {prediction.confidence}%
               </span>
             </div>
-            <Progress
-              value={prediction.confidence}
-              className="h-3"
-              indicatorClassName={getConfidenceBarColor()}
-            />
-            <p className="text-xs text-muted-foreground">
-              {prediction.confidence >= 90 ? 'Excellent match for your conditions' :
-                prediction.confidence >= 75 ? 'Good match for your conditions' :
-                  'Moderate match - consider alternatives'}
-            </p>
-          </div>
+          )}
         </div>
 
         {/* Weather Conditions */}
@@ -195,6 +204,66 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
               </div>
             </div>
           </div>
+
+          {/* Recommended Products */}
+          {prediction.topCrops && prediction.topCrops.length > 0 && (
+            <div className="space-y-4 pt-4 border-t dark:border-zinc-800">
+              <h3 className="font-semibold flex items-center gap-2">
+                <ShoppingBag className="h-5 w-5 text-purple-600" />
+                Recommended Products for Top Crops
+              </h3>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {prediction.topCrops.slice(0, 3).map((item, index) => {
+                  const cropName = item.crop.toLowerCase();
+                  const fertilizerInfo = cropFertilizers[cropName];
+                  const pesticideLink = `https://www.amazon.in/s?k=pesticides+for+${item.crop}`;
+
+                  return (
+                    <div key={item.crop} className="bg-slate-50 dark:bg-slate-900/50 border dark:border-slate-800 rounded-lg p-4 flex flex-col h-full">
+                      <div className="flex items-center gap-2 mb-3 pb-2 border-b dark:border-slate-800">
+                        <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${index === 0 ? "bg-green-100 text-green-700 dark:bg-green-900/30" :
+                            "bg-slate-200 text-slate-700 dark:bg-slate-800"
+                          }`}>
+                          #{index + 1}
+                        </span>
+                        <h4 className="font-bold capitalize">{item.crop}</h4>
+                      </div>
+
+                      <div className="space-y-4 flex-1">
+                        <div>
+                          <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Fertilizer</p>
+                          <p className="text-sm font-medium mb-1 line-clamp-2" title={fertilizerInfo?.fertilizer}>
+                            {fertilizerInfo?.fertilizer || 'Balanced Fertilizer'}
+                          </p>
+                          <a
+                            href={fertilizerInfo?.fertilizerLink || `https://www.amazon.in/s?k=fertilizer+for+${item.crop}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-purple-600 dark:text-purple-400 hover:text-purple-500 hover:underline flex items-center gap-1"
+                          >
+                            Buy Now <ExternalLink size={10} />
+                          </a>
+                        </div>
+
+                        <div>
+                          <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Pesticide</p>
+                          <a
+                            href={pesticideLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-purple-600 dark:text-purple-400 hover:text-purple-500 hover:underline flex items-center gap-1"
+                          >
+                            Find Pesticides <ExternalLink size={10} />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Additional Info */}

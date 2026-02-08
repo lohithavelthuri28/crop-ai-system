@@ -15,4 +15,5 @@ export interface PredictionResult {
   rainfall: number;
 
   probabilities?: Record<string, number>;
+  topCrops?: { crop: string; confidence: number }[];
 }

@@ -8,3 +8,7 @@ uvicorn
 joblib
 requests
 python-multipart
+sqlalchemy
+passlib[bcrypt]
+python-jose[cryptography]
+bcrypt
