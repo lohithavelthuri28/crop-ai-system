@@ -6,8 +6,10 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { Sprout, Brain, LogIn, Lock, User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function LoginPage() {
+    const { t } = useTranslation();
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -63,10 +65,10 @@ export function LoginPage() {
                     </div>
                     <div>
                         <CardTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-blue-600">
-                            Welcome Back
+                            {t('auth.welcomeBack')}
                         </CardTitle>
                         <CardDescription className="text-base mt-2">
-                            Sign in to access AI-powered crop estimates
+                            {t('auth.signInMessage')}
                         </CardDescription>
                     </div>
                 </CardHeader>
@@ -78,12 +80,12 @@ export function LoginPage() {
                             </div>
                         )}
                         <div className="space-y-2">
-                            <Label htmlFor="identifier">Username, Email, or Phone</Label>
+                            <Label htmlFor="identifier">{t('auth.username')}</Label>
                             <div className="relative">
                                 <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                                 <Input
                                     id="identifier"
-                                    placeholder="Enter your details"
+                                    placeholder={t('auth.identifierPlaceholder')}
                                     className="pl-9 h-11"
                                     value={identifier}
                                     onChange={(e) => setIdentifier(e.target.value)}
@@ -92,7 +94,7 @@ export function LoginPage() {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">{t('auth.password')}</Label>
                             <div className="relative">
                                 <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                                 <Input
@@ -115,12 +117,12 @@ export function LoginPage() {
                             {isLoading ? (
                                 <span className="flex items-center gap-2">
                                     <div className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                                    Signing In...
+                                    {t('auth.signingIn')}
                                 </span>
                             ) : (
                                 <span className="flex items-center gap-2">
                                     <LogIn className="h-4 w-4" />
-                                    Sign In
+                                    {t('auth.signIn')}
                                 </span>
                             )}
                         </Button>
@@ -128,13 +130,13 @@ export function LoginPage() {
                 </CardContent>
                 <CardFooter className="flex flex-col gap-4 justify-center border-t py-4 bg-muted/20">
                     <div className="text-sm text-center">
-                        Don't have an account?{' '}
+                        {t('auth.dontHaveAccount')} {' '}
                         <Link to="/signup" className="font-semibold text-green-600 hover:text-green-700 hover:underline">
-                            Sign up
+                            {t('auth.signUp')}
                         </Link>
                     </div>
                     <p className="text-xs text-muted-foreground text-center">
-                        By signing in, you agree to our Terms of Service and Privacy Policy.
+                        {t('auth.termsMessage')}
                     </p>
                 </CardFooter>
             </Card>

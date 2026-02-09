@@ -7,8 +7,10 @@ import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { Sprout, UserPlus, Mail, Phone, Lock, User } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 export function SignupPage() {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -23,6 +25,23 @@ export function SignupPage() {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+
+    const checkConnection = async () => {
+        try {
+            setIsLoading(true);
+            const res = await fetch('http://localhost:8000/health');
+            if (res.ok) {
+                const data = await res.json();
+                setError(`Server is running: ${data.message}`);
+            } else {
+                setError(`Server reachable but returned error: ${res.status}`);
+            }
+        } catch (err: any) {
+            setError(`Connection Failed: ${err.message}. Is the backend running on port 8000?`);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -54,10 +73,6 @@ export function SignupPage() {
                 throw new Error(data.detail || 'Signup failed');
             }
 
-            // Auto-login or redirect to login
-            // For now, let's redirect to login with a success message state? 
-            // Or better, just auto-login if the backend returns a token (which it does)
-
             if (data.access_token) {
                 login(data.username, data.access_token);
                 navigate('/');
@@ -66,7 +81,8 @@ export function SignupPage() {
             }
 
         } catch (err: any) {
-            setError(err.message);
+            console.error("Signup Error:", err);
+            setError(err.message || "Failed to connect to server");
         } finally {
             setIsLoading(false);
         }
@@ -80,10 +96,10 @@ export function SignupPage() {
                         <Sprout className="h-8 w-8 text-green-600 dark:text-green-400" />
                     </div>
                     <h1 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-                        Create Account
+                        {t('auth.createAccount')}
                     </h1>
                     <p className="text-sm text-muted-foreground mt-2">
-                        Join CropAI to access smart farming tools
+                        {t('auth.joinMessage')}
                     </p>
                 </div>
 
@@ -95,7 +111,7 @@ export function SignupPage() {
                     )}
 
                     <div className="space-y-2">
-                        <Label htmlFor="username">Username</Label>
+                        <Label htmlFor="username">{t('auth.username')}</Label>
                         <div className="relative">
                             <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                             <Input
@@ -110,7 +126,7 @@ export function SignupPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="email">Email (Optional)</Label>
+                        <Label htmlFor="email">{t('auth.email')}</Label>
                         <div className="relative">
                             <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                             <Input
@@ -125,7 +141,7 @@ export function SignupPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="phone">Phone (Optional)</Label>
+                        <Label htmlFor="phone">{t('auth.phone')}</Label>
                         <div className="relative">
                             <Phone className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                             <Input
@@ -140,7 +156,7 @@ export function SignupPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="password">Password</Label>
+                        <Label htmlFor="password">{t('auth.password')}</Label>
                         <div className="relative">
                             <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                             <Input
@@ -156,7 +172,7 @@ export function SignupPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="confirmPassword">Confirm Password</Label>
+                        <Label htmlFor="confirmPassword">{t('auth.confirmPassword')}</Label>
                         <div className="relative">
                             <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                             <Input
@@ -179,22 +195,33 @@ export function SignupPage() {
                         {isLoading ? (
                             <span className="flex items-center gap-2">
                                 <div className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                                Creating Account...
+                                {t('auth.creatingAccount')}
                             </span>
                         ) : (
                             <span className="flex items-center gap-2">
                                 <UserPlus className="h-4 w-4" />
-                                Sign Up
+                                {t('auth.signUp')}
                             </span>
                         )}
                     </Button>
                 </form>
 
-                <div className="mt-6 text-center text-sm">
-                    <span className="text-muted-foreground">Already have an account? </span>
-                    <Link to="/login" className="font-semibold text-green-600 hover:text-green-700 hover:underline">
-                        Sign in
-                    </Link>
+                <div className="mt-6 text-center text-sm space-y-2">
+                    <div>
+                        <span className="text-muted-foreground">{t('auth.alreadyHaveAccount')} </span>
+                        <Link to="/login" className="font-semibold text-green-600 hover:text-green-700 hover:underline">
+                            {t('auth.signIn')}
+                        </Link>
+                    </div>
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={checkConnection}
+                        className="text-xs text-muted-foreground hover:text-primary"
+                    >
+                        {t('auth.testConnection')}
+                    </Button>
                 </div>
             </Card>
         </div>

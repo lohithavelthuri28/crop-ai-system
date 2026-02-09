@@ -3,7 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Sprout, Brain, LogIn, LogOut, User, Settings, Edit } from 'lucide-react';
 import { Button } from './ui/button';
 import { ModeToggle } from './mode-toggle';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -30,6 +32,7 @@ export function Header() {
     const navigate = useNavigate();
     const [newUsername, setNewUsername] = useState('');
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const { t } = useTranslation();
 
     const isActive = (path: string) => {
         return location.pathname === path
@@ -68,18 +71,23 @@ export function Header() {
 
                 <nav className="flex items-center gap-6">
                     <Link to="/" className={`text-sm transition-colors ${isActive('/')}`}>
-                        Home
+                        {t('header.home')}
                     </Link>
                     {user && (
-                        <Link to="/estimate" className={`text-sm transition-colors ${isActive('/estimate')}`}>
-                            Estimate
-                        </Link>
+                        <>
+                            <Link to="/estimate" className={`text-sm transition-colors ${isActive('/estimate')}`}>
+                                {t('header.estimate')}
+                            </Link>
+                            <Link to="/analytics" className={`text-sm transition-colors ${isActive('/analytics')}`}>
+                                {t('header.analytics')}
+                            </Link>
+                        </>
                     )}
 
                     {/* Get Started Button - Visible Always */}
                     <Button asChild size="sm" className={`bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white shadow-md hover:shadow-lg transition-all ${user ? 'mr-2' : ''}`}>
                         <Link to="/estimate">
-                            Get Started
+                            {t('header.getStarted')}
                         </Link>
                     </Button>
 
@@ -91,7 +99,7 @@ export function Header() {
                                         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                                             <User className="h-4 w-4" />
                                         </div>
-                                        <span className="font-medium text-sm hidden sm:inline-block">Welcome, {user.name}</span>
+                                        <span className="font-medium text-sm hidden sm:inline-block">{t('header.welcome', { name: user.name })}</span>
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-56" align="end" forceMount>
@@ -106,14 +114,14 @@ export function Header() {
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem onClick={() => setIsDialogOpen(true)} className="cursor-pointer">
                                         <Edit className="mr-2 h-4 w-4" />
-                                        <span>Change Username</span>
+                                        <span>{t('header.changeUsername')}</span>
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
 
                             <Button onClick={handleLogout} variant="ghost" size="sm" className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20">
                                 <LogOut className="h-4 w-4 md:mr-2" />
-                                <span className="hidden md:inline">Log out</span>
+                                <span className="hidden md:inline">{t('header.logout')}</span>
                             </Button>
                         </>
                     ) : (
@@ -121,7 +129,7 @@ export function Header() {
                             <Button asChild size="sm" variant="ghost">
                                 <Link to="/login" className="flex items-center gap-2">
                                     <LogIn className="h-4 w-4" />
-                                    <span>Login</span>
+                                    <span>{t('header.login')}</span>
                                 </Link>
                             </Button>
                         </div>
@@ -130,16 +138,16 @@ export function Header() {
                     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                         <DialogContent className="sm:max-w-[425px]">
                             <DialogHeader>
-                                <DialogTitle>Edit Profile</DialogTitle>
+                                <DialogTitle>{t('header.editProfile')}</DialogTitle>
                                 <DialogDescription>
-                                    Make changes to your profile here. Click save when you're done.
+                                    {t('header.editProfileDesc')}
                                 </DialogDescription>
                             </DialogHeader>
                             <form onSubmit={handleUsernameChange}>
                                 <div className="grid gap-4 py-4">
                                     <div className="grid grid-cols-4 items-center gap-4">
                                         <Label htmlFor="username" className="text-right">
-                                            Username
+                                            {t('header.username')}
                                         </Label>
                                         <Input
                                             id="username"
@@ -150,12 +158,13 @@ export function Header() {
                                     </div>
                                 </div>
                                 <DialogFooter>
-                                    <Button type="submit">Save changes</Button>
+                                    <Button type="submit">{t('header.saveChanges')}</Button>
                                 </DialogFooter>
                             </form>
                         </DialogContent>
                     </Dialog>
 
+                    <LanguageSwitcher />
                     <ModeToggle />
                 </nav>
             </div>

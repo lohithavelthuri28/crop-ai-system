@@ -6,7 +6,10 @@ import { CropInputData, PredictionResult } from '../types/crop';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+import { useTranslation } from 'react-i18next';
+
 export function Dashboard() {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [prediction, setPrediction] = useState<PredictionResult | null>(null);
 
@@ -71,7 +74,7 @@ export function Dashboard() {
         >
           <Link to="/">
             <ArrowLeft className="h-4 w-4" />
-            Back to Home
+            {t('estimate.back')}
           </Link>
         </Button>
       </div>

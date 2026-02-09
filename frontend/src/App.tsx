@@ -9,6 +9,9 @@ import { LoginPage } from './components/LoginPage';
 import { SignupPage } from './components/SignupPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
+import { ChatBot } from './components/ChatBot';
+import { AnalyticsPage } from './components/AnalyticsPage';
+
 export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
@@ -20,6 +23,7 @@ export default function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
+              <Route path="/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
               <Route
                 path="/estimate"
                 element={
@@ -37,6 +41,7 @@ export default function App() {
                 }
               />
             </Routes>
+            <ChatBot />
           </div>
         </Router>
       </AuthProvider>

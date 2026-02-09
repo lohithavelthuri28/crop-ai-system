@@ -3,6 +3,7 @@ import { Progress } from './ui/progress';
 import { PredictionResult } from '../types/crop';
 import { Wheat, TrendingUp, Thermometer, Droplets, CloudRain, Sparkles, Loader2, ShoppingBag, ExternalLink } from 'lucide-react';
 import { cropFertilizers } from '../data/fertilizers';
+import { useTranslation } from 'react-i18next';
 
 interface ResultsCardProps {
   prediction: PredictionResult | null;
@@ -10,21 +11,23 @@ interface ResultsCardProps {
 }
 
 export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
+  const { t } = useTranslation();
+
   if (isLoading) {
     return (
       <Card className="shadow-lg">
         <CardHeader className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-950/30 dark:to-green-950/30 border-b dark:border-zinc-800">
           <div className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-blue-600" />
-            <CardTitle>AI Analysis</CardTitle>
+            <CardTitle>{t('results.aiAnalysis')}</CardTitle>
           </div>
-          <CardDescription>Processing your data with AI algorithms</CardDescription>
+          <CardDescription>{t('results.processing')}</CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
           <div className="flex flex-col items-center justify-center py-16 space-y-4">
             <Loader2 className="h-16 w-16 text-green-600 animate-spin" />
             <p className="text-muted-foreground text-center">
-              Analyzing soil nutrients and weather conditions...
+              {t('results.analyzingMessage')}
             </p>
           </div>
         </CardContent>
@@ -38,9 +41,9 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
         <CardHeader className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-950/30 dark:to-green-950/30 border-b dark:border-zinc-800">
           <div className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-blue-600" />
-            <CardTitle>Prediction Results</CardTitle>
+            <CardTitle>{t('results.predictionResults')}</CardTitle>
           </div>
-          <CardDescription>Your crop recommendation will appear here</CardDescription>
+          <CardDescription>{t('results.predictionDesc')}</CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
           <div className="flex flex-col items-center justify-center py-16 text-center space-y-4">
@@ -49,10 +52,10 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
             </div>
             <div className="space-y-2">
               <p className="font-medium text-lg text-muted-foreground">
-                No Prediction Yet
+                {t('results.noPrediction')}
               </p>
               <p className="text-sm text-muted-foreground max-w-xs">
-                Fill in the input form and click "Predict Best Crop" to get AI-powered recommendations
+                {t('results.noPredictionDesc')}
               </p>
             </div>
           </div>
@@ -82,16 +85,16 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
       <CardHeader className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-950/30 dark:to-green-950/30 border-b dark:border-zinc-800">
         <div className="flex items-center gap-2">
           <Sparkles className="h-5 w-5 text-blue-600 animate-pulse" />
-          <CardTitle>Prediction Results</CardTitle>
+          <CardTitle>{t('results.predictionResults')}</CardTitle>
         </div>
-        <CardDescription>AI-powered crop recommendation based on your inputs</CardDescription>
+        <CardDescription>{t('results.predictionSuccessDesc')}</CardDescription>
       </CardHeader>
       <CardContent className="pt-6 space-y-6">
         {/* Top 3 Crops Podium (Themed) */}
         <div className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20 rounded-lg p-6 border-2 border-green-200 dark:border-green-900/50">
           <div className="flex flex-col items-center mb-6">
-            <h2 className="text-xl font-bold text-center mb-2">Top Recommendations</h2>
-            <p className="text-sm text-muted-foreground">Based on your soil and climate data</p>
+            <h2 className="text-xl font-bold text-center mb-2">{t('results.topRecommendations')}</h2>
+            <p className="text-sm text-muted-foreground">{t('results.basedOnData')}</p>
           </div>
 
           {prediction.topCrops && prediction.topCrops.length >= 3 ? (
@@ -99,33 +102,39 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
               {/* 2nd Place */}
               <div className="flex flex-col items-center w-1/3">
                 <div className="mb-2 text-center">
-                  <p className="font-bold text-lg text-green-700 dark:text-green-300">{prediction.topCrops[1].crop}</p>
+                  <p className="font-bold text-lg text-green-700 dark:text-green-300">
+                    {t(`crops.${prediction.topCrops[1].crop.toLowerCase()}`, { defaultValue: prediction.topCrops[1].crop })}
+                  </p>
                   <p className="text-sm font-medium text-muted-foreground">{prediction.topCrops[1].confidence}%</p>
                 </div>
                 <div className="w-full bg-green-100 dark:bg-green-900/40 rounded-t-lg flex flex-col items-center justify-start py-4 h-24 border-t-4 border-green-400/50">
-                  <span className="font-bold text-green-600 dark:text-green-400 mt-1">2nd</span>
+                  <span className="font-bold text-green-600 dark:text-green-400 mt-1">{t('results.rank2')}</span>
                 </div>
               </div>
 
               {/* 1st Place */}
               <div className="flex flex-col items-center w-1/3">
                 <div className="mb-2 text-center">
-                  <p className="font-bold text-xl text-green-800 dark:text-green-100">{prediction.topCrops[0].crop}</p>
+                  <p className="font-bold text-xl text-green-800 dark:text-green-100">
+                    {t(`crops.${prediction.topCrops[0].crop.toLowerCase()}`, { defaultValue: prediction.topCrops[0].crop })}
+                  </p>
                   <p className="text-sm font-medium text-muted-foreground">{prediction.topCrops[0].confidence}%</p>
                 </div>
                 <div className="w-full bg-green-200 dark:bg-green-800/40 rounded-t-lg flex flex-col items-center justify-start py-4 h-32 border-t-4 border-green-600 shadow-md">
-                  <span className="font-bold text-green-800 dark:text-green-200 mt-1 text-lg">1st</span>
+                  <span className="font-bold text-green-800 dark:text-green-200 mt-1 text-lg">{t('results.rank1')}</span>
                 </div>
               </div>
 
               {/* 3rd Place */}
               <div className="flex flex-col items-center w-1/3">
                 <div className="mb-2 text-center">
-                  <p className="font-bold text-lg text-green-700 dark:text-green-300">{prediction.topCrops[2].crop}</p>
+                  <p className="font-bold text-lg text-green-700 dark:text-green-300">
+                    {t(`crops.${prediction.topCrops[2].crop.toLowerCase()}`, { defaultValue: prediction.topCrops[2].crop })}
+                  </p>
                   <p className="text-sm font-medium text-muted-foreground">{prediction.topCrops[2].confidence}%</p>
                 </div>
                 <div className="w-full bg-green-50 dark:bg-green-900/20 rounded-t-lg flex flex-col items-center justify-start py-4 h-16 border-t-4 border-green-300/50">
-                  <span className="font-bold text-green-500 dark:text-green-500 mt-1">3rd</span>
+                  <span className="font-bold text-green-500 dark:text-green-500 mt-1">{t('results.rank3')}</span>
                 </div>
               </div>
             </div>
@@ -137,8 +146,10 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
                   {getCropIcon()}
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Recommended Crop</p>
-                  <h2 className="text-3xl font-bold text-green-700">{prediction.crop}</h2>
+                  <p className="text-sm font-medium text-muted-foreground">{t('results.recommendedCrop')}</p>
+                  <h2 className="text-3xl font-bold text-green-700">
+                    {t(`crops.${prediction.crop.toLowerCase()}`, { defaultValue: prediction.crop })}
+                  </h2>
                 </div>
               </div>
               <span className={`text-2xl font-bold ${getConfidenceColor()}`}>
@@ -152,7 +163,7 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
         <div className="space-y-4">
           <h3 className="font-semibold flex items-center gap-2">
             <CloudRain className="h-5 w-5 text-blue-600" />
-            Environmental Conditions
+            {t('results.environmentalConditions')}
           </h3>
 
           <div className="grid grid-cols-1 gap-3">
@@ -163,8 +174,8 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
                   <Thermometer className="h-5 w-5 text-orange-600" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Temperature</p>
-                  <p className="text-xs text-muted-foreground">Optimal growing temperature</p>
+                  <p className="text-sm font-medium text-muted-foreground">{t('results.temperature')}</p>
+                  <p className="text-xs text-muted-foreground">{t('results.optimalTemp')}</p>
                 </div>
               </div>
               <div className="text-right">
@@ -179,8 +190,8 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
                   <Droplets className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Humidity</p>
-                  <p className="text-xs text-muted-foreground">Relative humidity level</p>
+                  <p className="text-sm font-medium text-muted-foreground">{t('results.humidity')}</p>
+                  <p className="text-xs text-muted-foreground">{t('results.relativeHumidity')}</p>
                 </div>
               </div>
               <div className="text-right">
@@ -195,8 +206,8 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
                   <CloudRain className="h-5 w-5 text-cyan-600" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Rainfall</p>
-                  <p className="text-xs text-muted-foreground">Annual precipitation</p>
+                  <p className="text-sm font-medium text-muted-foreground">{t('results.rainfall')}</p>
+                  <p className="text-xs text-muted-foreground">{t('results.annualPrecipitation')}</p>
                 </div>
               </div>
               <div className="text-right">
@@ -210,7 +221,7 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
             <div className="space-y-4 pt-4 border-t dark:border-zinc-800">
               <h3 className="font-semibold flex items-center gap-2">
                 <ShoppingBag className="h-5 w-5 text-purple-600" />
-                Recommended Products for Top Crops
+                {t('results.recommendedProducts')}
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -223,16 +234,18 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
                     <div key={item.crop} className="bg-slate-50 dark:bg-slate-900/50 border dark:border-slate-800 rounded-lg p-4 flex flex-col h-full">
                       <div className="flex items-center gap-2 mb-3 pb-2 border-b dark:border-slate-800">
                         <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${index === 0 ? "bg-green-100 text-green-700 dark:bg-green-900/30" :
-                            "bg-slate-200 text-slate-700 dark:bg-slate-800"
+                          "bg-slate-200 text-slate-700 dark:bg-slate-800"
                           }`}>
                           #{index + 1}
                         </span>
-                        <h4 className="font-bold capitalize">{item.crop}</h4>
+                        <h4 className="font-bold capitalize">
+                          {t(`crops.${cropName}`, { defaultValue: item.crop })}
+                        </h4>
                       </div>
 
                       <div className="space-y-4 flex-1">
                         <div>
-                          <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Fertilizer</p>
+                          <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">{t('results.fertilizer')}</p>
                           <p className="text-sm font-medium mb-1 line-clamp-2" title={fertilizerInfo?.fertilizer}>
                             {fertilizerInfo?.fertilizer || 'Balanced Fertilizer'}
                           </p>
@@ -242,19 +255,19 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
                             rel="noopener noreferrer"
                             className="text-xs text-purple-600 dark:text-purple-400 hover:text-purple-500 hover:underline flex items-center gap-1"
                           >
-                            Buy Now <ExternalLink size={10} />
+                            {t('results.buyNow')} <ExternalLink size={10} />
                           </a>
                         </div>
 
                         <div>
-                          <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Pesticide</p>
+                          <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">{t('results.pesticide')}</p>
                           <a
                             href={pesticideLink}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-xs text-purple-600 dark:text-purple-400 hover:text-purple-500 hover:underline flex items-center gap-1"
                           >
-                            Find Pesticides <ExternalLink size={10} />
+                            {t('results.findPesticides')} <ExternalLink size={10} />
                           </a>
                         </div>
                       </div>
@@ -269,8 +282,7 @@ export function ResultsCard({ prediction, isLoading }: ResultsCardProps) {
         {/* Additional Info */}
         <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900/30 rounded-lg p-4">
           <p className="text-sm text-yellow-800">
-            <strong>💡 Tip:</strong> This recommendation is based on your soil composition and local climate data.
-            Consider consulting with local agricultural experts for best results.
+            <strong>💡 {t('results.tip')}</strong> {t('results.tipMessage')}
           </p>
         </div>
       </CardContent>

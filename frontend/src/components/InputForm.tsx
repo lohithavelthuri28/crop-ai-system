@@ -6,6 +6,7 @@ import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { CropInputData } from '../types/crop';
 import { FlaskConical, Droplets, Wind, MapPin, Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface InputFormProps {
   onPredict: (data: CropInputData) => void;
@@ -13,6 +14,7 @@ interface InputFormProps {
 }
 
 export function InputForm({ onPredict, isLoading }: InputFormProps) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<CropInputData>({
     nitrogen: 50,
     phosphorus: 30,
@@ -44,14 +46,14 @@ export function InputForm({ onPredict, isLoading }: InputFormProps) {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <FlaskConical className="h-5 w-5 text-green-600" />
-            <CardTitle>Soil Test Estimate</CardTitle>
+            <CardTitle>{t('inputForm.title')}</CardTitle>
           </div>
           <Button variant="outline" size="sm" asChild className="w-full sm:w-auto">
-            <a href="/standard-estimate">Standard Estimate</a>
+            <a href="/standard-estimate">{t('inputForm.standardEstimate')}</a>
           </Button>
         </div>
         <CardDescription>
-          Enter soil nutrients, pH level, and location details for accurate crop prediction
+          {t('inputForm.description')}
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-6">
@@ -62,13 +64,13 @@ export function InputForm({ onPredict, isLoading }: InputFormProps) {
               <div className="rounded-full bg-green-100 dark:bg-green-900/30 p-1.5">
                 <FlaskConical className="h-4 w-4 text-green-600" />
               </div>
-              <h3 className="font-semibold text-sm">Soil Nutrients (kg/ha)</h3>
+              <h3 className="font-semibold text-sm">{t('inputForm.soilNutrients')}</h3>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="nitrogen">
-                Nitrogen (N)
-                <span className="text-xs text-muted-foreground ml-2">Recommended: 0-140</span>
+                {t('inputForm.nitrogen')}
+                <span className="text-xs text-muted-foreground ml-2">{t('inputForm.nitrogenRec')}</span>
               </Label>
               <Input
                 id="nitrogen"
@@ -81,13 +83,13 @@ export function InputForm({ onPredict, isLoading }: InputFormProps) {
                 required
                 className="border-green-200 focus:border-green-400"
               />
-              <p className="text-xs text-muted-foreground">Essential for leaf growth and green color</p>
+              <p className="text-xs text-muted-foreground">{t('inputForm.nitrogenDesc')}</p>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="phosphorus">
-                Phosphorus (P)
-                <span className="text-xs text-muted-foreground ml-2">Recommended: 0-145</span>
+                {t('inputForm.phosphorus')}
+                <span className="text-xs text-muted-foreground ml-2">{t('inputForm.phosphorusRec')}</span>
               </Label>
               <Input
                 id="phosphorus"
@@ -100,13 +102,13 @@ export function InputForm({ onPredict, isLoading }: InputFormProps) {
                 required
                 className="border-green-200 focus:border-green-400"
               />
-              <p className="text-xs text-muted-foreground">Important for root development and flowering</p>
+              <p className="text-xs text-muted-foreground">{t('inputForm.phosphorusDesc')}</p>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="potassium">
-                Potassium (K)
-                <span className="text-xs text-muted-foreground ml-2">Recommended: 0-205</span>
+                {t('inputForm.potassium')}
+                <span className="text-xs text-muted-foreground ml-2">{t('inputForm.potassiumRec')}</span>
               </Label>
               <Input
                 id="potassium"
@@ -119,7 +121,7 @@ export function InputForm({ onPredict, isLoading }: InputFormProps) {
                 required
                 className="border-green-200 focus:border-green-400"
               />
-              <p className="text-xs text-muted-foreground">Enhances disease resistance and water regulation</p>
+              <p className="text-xs text-muted-foreground">{t('inputForm.potassiumDesc')}</p>
             </div>
           </div>
 
@@ -129,13 +131,13 @@ export function InputForm({ onPredict, isLoading }: InputFormProps) {
               <div className="rounded-full bg-blue-100 dark:bg-blue-900/30 p-1.5">
                 <Droplets className="h-4 w-4 text-blue-600" />
               </div>
-              <h3 className="font-semibold text-sm">Soil Properties</h3>
+              <h3 className="font-semibold text-sm">{t('inputForm.soilProperties')}</h3>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="soilPH">
-                Soil pH Level
-                <span className="text-xs text-muted-foreground ml-2">Range: 3.5-9.5</span>
+                {t('inputForm.phLevel')}
+                <span className="text-xs text-muted-foreground ml-2">{t('inputForm.phRange')}</span>
               </Label>
               <Input
                 id="soilPH"
@@ -149,7 +151,7 @@ export function InputForm({ onPredict, isLoading }: InputFormProps) {
                 required
                 className="border-blue-200 focus:border-blue-400"
               />
-              <p className="text-xs text-muted-foreground">Neutral pH (6.5-7.5) is ideal for most crops</p>
+              <p className="text-xs text-muted-foreground">{t('inputForm.phDesc')}</p>
             </div>
           </div>
 
@@ -159,18 +161,18 @@ export function InputForm({ onPredict, isLoading }: InputFormProps) {
               <div className="rounded-full bg-purple-100 dark:bg-purple-900/30 p-1.5">
                 <MapPin className="h-4 w-4 text-purple-600" />
               </div>
-              <h3 className="font-semibold text-sm">Location Details</h3>
+              <h3 className="font-semibold text-sm">{t('inputForm.locationDetails')}</h3>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="state">State</Label>
+              <Label htmlFor="state">{t('inputForm.state')}</Label>
               <Select
                 value={formData.state}
                 onValueChange={(value) => setFormData({ ...formData, state: value })}
                 required
               >
                 <SelectTrigger id="state" className="border-purple-200 focus:border-purple-400">
-                  <SelectValue placeholder="Select your state" />
+                  <SelectValue placeholder={t('inputForm.selectState')} />
                 </SelectTrigger>
                 <SelectContent>
                   {indianStates.map((state) => (
@@ -180,21 +182,21 @@ export function InputForm({ onPredict, isLoading }: InputFormProps) {
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-muted-foreground">Select the state where farming will be done</p>
+              <p className="text-xs text-muted-foreground">{t('inputForm.stateDesc')}</p>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="city">City</Label>
+              <Label htmlFor="city">{t('inputForm.city')}</Label>
               <Input
                 id="city"
                 type="text"
                 value={formData.city}
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                placeholder="e.g., Mumbai"
+                placeholder={t('inputForm.cityPlaceholder')}
                 required
                 className="border-purple-200 focus:border-purple-400"
               />
-              <p className="text-xs text-muted-foreground">Enter your city or district name</p>
+              <p className="text-xs text-muted-foreground">{t('inputForm.cityDesc')}</p>
             </div>
           </div>
 
@@ -207,12 +209,12 @@ export function InputForm({ onPredict, isLoading }: InputFormProps) {
             {isLoading ? (
               <>
                 <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                Analyzing Data...
+                {t('inputForm.analyzing')}
               </>
             ) : (
               <>
                 <Wind className="h-5 w-5 mr-2" />
-                Predict Best Crop
+                {t('inputForm.predictBtn')}
               </>
             )}
           </Button>
